@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criação de Personagem - Nuvária</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f9;
+      padding: 20px;
+      color: #333;
+      max-width: 800px;
+      margin: auto;
+    }
+    h1, h2 {
+      color: #3e4e88;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 4px;
+      margin-bottom: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .atributo-input {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    .final-text {
+      background: #e9ecf5;
+      padding: 15px;
+      border-left: 5px solid #3e4e88;
+      font-style: italic;
+      margin-top: 30px;
+    }
+    .visao-geral {
+      margin-top: 40px;
+      padding: 15px;
+      background-color: #fff;
+      border: 1px dashed #3e4e88;
+    }
+    .visao-geral h2 {
+      color: #3e4e88;
+    }
+  </style>
+</head>
+<body>
+  <h1>Criação de Personagem para RPG de Nuvária</h1>
+
+  <form id="form-personagem">
+    <label for="nome">Nome do Personagem:</label>
+    <input type="text" id="nome" name="nome">
+
+    <label for="idade">Idade:</label>
+    <input type="text" id="idade" name="idade">
+
+    <label for="personalidade">Personalidade:</label>
+    <textarea id="personalidade" name="personalidade"></textarea>
+
+    <label for="raca">Raça:</label>
+      <textarea id= "raca" name= "raca"></textarea>
+  
+
+    <label for="item">Item Inicial Único:</label>
+    <textarea id="item" name="item"></textarea>
+
+    <label for="fraqueza">Fraqueza:</label>
+    <textarea id="fraqueza" name="fraqueza"></textarea>
+
+    <label for="vantagem">Ponto Forte:</label>
+    <textarea id="vantagem" name="vantagem"></textarea>
+
+    <label for="classe">Classe Inicial:</label>
+    <input type="text" id="classe" name="classe">
+
+    <label for="objetivo">Objetivo Pessoal (Opcional):</label>
+    <textarea id="objetivo" name="objetivo"></textarea>
+
+    <h2>Atributos (6 pontos para distribuir)</h2>
+    <div class="atributo-input">
+      <label for="forca">Força:</label>
+      <input type="number" id="forca" name="forca" min="0" max="3" value="0">
+    </div>
+    <div class="atributo-input">
+      <label for="mente">Mente:</label>
+      <input type="number" id="mente" name="mente" min="0" max="3" value="0">
+    </div>
+    <div class="atributo-input">
+      <label for="vontade">Vontade:</label>
+      <input type="number" id="vontade" name="vontade" min="0" max="3" value="0">
+    </div>
+
+    <label for="aparencia">Aparência e Estilo:</label>
+    <textarea id="aparencia" name="aparencia"></textarea>
+
+    <button type="button" onclick="mostrarVisaoGeral()">Gerar Visão Geral</button>
+  </form>
+
+  <div class="final-text">
+    Em um mundo suspenso nos céus, todo personagem carrega um fragmento de Nuvária dentro de si — seja um segredo, uma ambição ou um vínculo com as forças que sustentam as ilhas. Crie alguém que você tenha vontade de interpretar, de colocar em risco, de ver crescer. Este é o seu herói entre as nuvens.
+  </div>
+
+  <div class="visao-geral" id="visao-geral" style="display:none">
+    <h2>🔍 Visão Geral do Personagem</h2>
+    <p><strong>Nome:</strong> <span id="res-nome"></span></p>
+    <p><strong>Idade:</strong> <span id="res-idade"></span></p>
+    <p><strong>Personalidade:</strong> <span id="res-personalidade"></span></p>
+    <p><strong>Raça:</strong> <span id="res-raca"></span></p>
+    <p><strong>Item Inicial:</strong> <span id="res-item"></span></p>
+    <p><strong>Fraqueza:</strong> <span id="res-fraqueza"></span></p>
+    <p><strong>Ponto Forte:</strong> <span id="res-vantagem"></span></p>
+    <p><strong>Classe Inicial:</strong> <span id="res-classe"></span></p>
+    <p><strong>Objetivo:</strong> <span id="res-objetivo"></span></p>
+    <p><strong>Atributos:</strong>
+      Força: <span id="res-forca"></span>,
+      Mente: <span id="res-mente"></span>,
+      Vontade: <span id="res-vontade"></span>
+    </p>
+    <p><strong>Aparência:</strong> <span id="res-aparencia"></span></p>
+  </div>
+
+  <script>
+    const inputs = document.querySelectorAll("input[type='number']");
+    inputs.forEach(input => {
+      input.addEventListener("input", () => {
+        const total = [...inputs].reduce((sum, el) => sum + parseInt(el.value || 0), 0);
+        if (total > 6) {
+          alert("Você só pode distribuir no máximo 6 pontos!");
+          input.value = 0;
+        }
+      });
+    });
+
+    function mostrarVisaoGeral() {
+      document.getElementById('visao-geral').style.display = 'block';
+      const campos = [
+        'nome', 'idade', 'personalidade', 'raca', 'item', 'fraqueza', 'vantagem',
+        'classe', 'objetivo', 'forca', 'mente', 'vontade', 'aparencia'
+      ];
+      campos.forEach(campo => {
+        const valor = document.getElementById(campo).value;
+        document.getElementById(`res-${campo}`).textContent = valor;
+      });
+    }
+  </script>
+</body>
+</html>
